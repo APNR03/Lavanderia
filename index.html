@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clean Impkable – Lavandería de Muebles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+  --navy: #0a2540;        /* deep blue (keeps contrast) */
+  --gold: #00bcd4;        /* main cyan */
+  --gold-light: #4dd0e1;  /* light sky blue */
+  --white: #ffffff;
+  --off-white: #f0fbff;   /* very light blue background */
+  --dark: #062b33;        /* dark teal for text */
+  --accent: #00e5ff;      /* bright cyan accent */
+}
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--off-white);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(26,43,94,0.97);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 5%;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+    nav img.logo { height: 56px; border-radius: 8px; }
+    nav .nav-links { display: flex; gap: 28px; }
+    nav .nav-links a {
+      color: var(--white); text-decoration: none;
+      font-weight: 700; font-size: 0.9rem; letter-spacing: 0.05em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    nav .nav-links a:hover { color: var(--gold-light); }
+    nav .nav-cta {
+      background: var(--gold); color: var(--navy);
+      padding: 10px 22px; border-radius: 50px;
+      font-weight: 900; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    nav .nav-cta:hover { background: var(--gold-light); transform: scale(1.05); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy) 0%, #2a4099 50%, var(--dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center;
+      padding: 120px 5% 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.07)"/></svg>') repeat;
+      animation: drift 20s linear infinite;
+    }
+    @keyframes drift { from { background-position: 0 0; } to { background-position: 60px 60px; } }
+
+    .hero-badge {
+      background: var(--gold); color: var(--navy);
+      padding: 6px 20px; border-radius: 50px;
+      font-weight: 900; font-size: 0.8rem; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 20px;
+      display: inline-block; position: relative;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      color: var(--white); line-height: 0.9;
+      letter-spacing: 0.02em;
+      animation: fadeUp 0.6s 0.1s ease both;
+      position: relative;
+    }
+    .hero h1 span { color: var(--gold-light); }
+    .hero p {
+      color: rgba(255,255,255,0.8); font-size: clamp(1rem, 2.5vw, 1.3rem);
+      max-width: 550px; margin: 20px auto 36px;
+      line-height: 1.6; animation: fadeUp 0.6s 0.2s ease both;
+      position: relative;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.6s 0.3s ease both; position: relative;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 16px 36px; border-radius: 50px;
+      font-weight: 900; font-size: 1.05rem; text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      transition: all 0.25s; box-shadow: 0 6px 24px rgba(201,162,39,0.4);
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(201,162,39,0.5); }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      padding: 16px 36px; border-radius: 50px;
+      font-weight: 700; font-size: 1.05rem; text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.4);
+      transition: all 0.25s;
+    }
+    .btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px;
+      animation: fadeUp 0.6s 0.4s ease both; position: relative;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .stat { text-align: center; }
+    .stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--gold-light); line-height: 1; }
+    .stat .label { color: rgba(255,255,255,0.6); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 80px 5%; }
+    .section-tag {
+      font-size: 0.75rem; font-weight: 900; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--navy); line-height: 1; margin-bottom: 14px;
+    }
+    .section-sub { color: #555; font-size: 1rem; max-width: 520px; line-height: 1.6; margin-bottom: 48px; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--white); }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      background: var(--off-white); border-radius: 20px;
+      padding: 36px 28px; text-align: center;
+      transition: all 0.3s; border: 2px solid transparent;
+      cursor: default;
+    }
+    .service-card:hover {
+      border-color: var(--gold); transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(26,43,94,0.12);
+    }
+    .service-icon { font-size: 3rem; margin-bottom: 16px; }
+    .service-card h3 { font-size: 1.1rem; font-weight: 900; color: var(--navy); margin-bottom: 8px; }
+    .service-card p { font-size: 0.88rem; color: #666; line-height: 1.5; }
+
+    /* ── BEFORE/AFTER ── */
+    .gallery { background: var(--navy); }
+    .gallery .section-title { color: var(--white); }
+    .gallery .section-sub { color: rgba(255,255,255,0.6); }
+    .gallery .section-tag { color: var(--gold-light); }
+
+    .ba-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .ba-card {
+      border-radius: 16px; overflow: hidden;
+      position: relative; background: #0d1a3a;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    .ba-pair {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    }
+    .ba-pair img {
+      width: 100%; height: 200px; object-fit: cover; display: block;
+    }
+    .ba-label {
+      position: absolute; top: 10px; padding: 4px 12px;
+      font-size: 0.75rem; font-weight: 900; border-radius: 20px;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .ba-label.antes { left: 10px; background: var(--accent); color: white; }
+    .ba-label.despues { right: 10px; background: #22c55e; color: white; }
+    .ba-card-title {
+      padding: 14px 16px; color: var(--gold-light);
+      font-weight: 900; font-size: 0.9rem; text-align: center;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+
+    /* ── VIDEO ── */
+    .video-section { background: var(--off-white); text-align: center; }
+    .video-wrapper {
+      max-width: 700px; margin: 0 auto;
+      background: var(--navy); border-radius: 24px;
+      overflow: hidden; box-shadow: 0 20px 60px rgba(26,43,94,0.25);
+    }
+    .video-placeholder {
+      aspect-ratio: 16/9; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--navy), #2a4099);
+      color: white; gap: 16px; padding: 40px;
+    }
+    .video-placeholder .play-btn {
+      width: 72px; height: 72px; background: var(--gold);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; cursor: pointer; transition: transform 0.2s;
+      box-shadow: 0 6px 24px rgba(201,162,39,0.5);
+    }
+    .video-placeholder .play-btn:hover { transform: scale(1.1); }
+    .video-placeholder p { font-size: 1rem; opacity: 0.7; max-width: 300px; line-height: 1.5; }
+    .video-placeholder h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold-light); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--white); }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .tcard {
+      background: var(--off-white); border-radius: 20px; padding: 28px;
+      border-left: 4px solid var(--gold);
+    }
+    .tcard .stars { color: var(--gold); font-size: 1.1rem; margin-bottom: 12px; }
+    .tcard p { font-size: 0.95rem; color: #444; line-height: 1.6; margin-bottom: 16px; font-style: italic; }
+    .tcard .author { font-weight: 900; color: var(--navy); font-size: 0.9rem; }
+
+    /* ── CONTACT ── */
+    .contact { background: linear-gradient(135deg, var(--navy) 0%, #2a4099 100%); }
+    .contact .section-title { color: var(--white); }
+    .contact .section-tag { color: var(--gold-light); }
+    .contact .section-sub { color: rgba(255,255,255,0.7); }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 16px; }
+    .contact-item {
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(255,255,255,0.08); border-radius: 14px;
+      padding: 16px 20px; text-decoration: none; color: white;
+      transition: all 0.2s; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .contact-item:hover { background: rgba(255,255,255,0.15); transform: translateX(6px); }
+    .contact-item .icon { font-size: 1.6rem; }
+    .contact-item .info strong { display: block; font-weight: 900; font-size: 0.85rem; color: var(--gold-light); text-transform: uppercase; letter-spacing: 0.05em; }
+    .contact-item .info span { font-size: 1rem; }
+
+    .map-wrapper {
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+      height: 320px;
+    }
+    .map-wrapper iframe { width: 100%; height: 100%; border: none; }
+
+    /* ── SOCIAL ── */
+    .social-bar {
+      background: var(--dark); padding: 40px 5%;
+      text-align: center;
+    }
+    .social-bar p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.1em; }
+    .social-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .social-link {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.08); color: white;
+      padding: 12px 24px; border-radius: 50px; text-decoration: none;
+      font-weight: 700; font-size: 0.9rem; transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .social-link:hover { background: var(--gold); color: var(--navy); transform: translateY(-3px); }
+    .social-link.whatsapp:hover { background: #25D366; color: white; }
+    .social-link.tiktok:hover { background: #ff0050; color: white; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080f1f; color: rgba(255,255,255,0.4);
+      text-align: center; padding: 24px 5%;
+      font-size: 0.82rem;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      background: #25D366; color: white;
+      width: 62px; height: 62px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+      animation: pulse 2.5s ease infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 6px 40px rgba(37,211,102,0.8); transform: scale(1.06); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav .nav-links { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .map-wrapper { height: 240px; }
+      .hero h1 { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <img src="logo.jfif" alt="Clean Impkable Logo" class="logo" />
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#resultados">Resultados</a>
+    <a href="#video">Video</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+  <a href="https://wa.me/51970676245?text=Hola!%20Quiero%20información%20sobre%20sus%20servicios" target="_blank" class="nav-cta">📲 Cotizar ahora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✨ N°1 en limpieza de muebles en Perú</div>
+  <h1>LIMPIEZA<br><span>IMPECABLE</span></h1>
+  <p>Devolvemos la vida a tus muebles, colchones y sofás. Resultados visibles desde la primera sesión.</p>
+  <div class="hero-btns">
+    <a href="https://wa.me/51970676245?text=Hola!%20Quiero%20información%20sobre%20sus%20servicios" target="_blank" class="btn-primary">📲 WhatsApp</a>
+    <a href="#resultados" class="btn-secondary">Ver resultados →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">500+</div><div class="label">Clientes felices</div></div>
+    <div class="stat"><div class="num">100%</div><div class="label">Garantía de calidad</div></div>
+    <div class="stat"><div class="num">5★</div><div class="label">Calificación</div></div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="section-tag">Lo que hacemos</div>
+  <div class="section-title">NUESTROS SERVICIOS</div>
+  <div class="section-sub">Limpieza profunda para todo tipo de muebles tapizados con equipos profesionales y productos de alta calidad.</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🛋️</div>
+      <h3>Sofás & Salas</h3>
+      <p>Limpieza profunda que elimina manchas, bacterias y malos olores de todo tipo de tapizado.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🛏️</div>
+      <h3>Colchones</h3>
+      <p>Desinfección y limpieza total para un descanso saludable, eliminando ácaros y suciedad acumulada.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🪑</div>
+      <h3>Sillas & Sillones</h3>
+      <p>Restauramos el aspecto original de tus sillas y sillones, sin importar el material o el nivel de suciedad.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <h3>A domicilio</h3>
+      <p>Vamos hasta tu hogar o negocio. Sin complicaciones, con resultados profesionales garantizados.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE/AFTER GALLERY -->
+<section class="gallery" id="resultados">
+  <div class="section-tag">Antes & Después</div>
+  <div class="section-title" style="color:white">LOS RESULTADOS HABLAN</div>
+  <div class="section-sub">Mira la transformación real de nuestros clientes. Sin filtros, sin edición.</div>
+
+  <div class="ba-grid">
+
+    <div class="ba-card">
+      <div class="ba-pair">
+        <img src="antes1.jpeg" alt="Sofá antes" />
+        <img src="despues1.jpeg" alt="Sofá después" />
+      </div>
+      <div class="ba-card-title">🛋️ Sofá rojizo — transformación total</div>
+    </div>
+
+    <div class="ba-card">
+      <div class="ba-pair">
+        <img src="antes3.jpeg" alt="Sala antes" />
+        <img src="despues3.jpeg" alt="Sala después" />
+      </div>
+      <div class="ba-card-title">🛋️ Colchón — manchas eliminadas</div>
+    </div>
+
+    <div class="ba-card">
+      <div class="ba-pair">
+        <img src="antes6.jpeg" alt="Colchón antes" />
+        <img src="despues6.jpeg" alt="Colchón después" />
+      </div>
+      <div class="ba-card-title">🛏️ Colchón — desinfección profunda</div>
+    </div>
+
+    <div class="ba-card">
+      <div class="ba-pair">
+        <img src="cama1.jpeg" alt="Colchón antes" />
+        <img src="cama2.jpeg" alt="Colchón después" />
+      </div>
+      <div class="ba-card-title">🛋️ Sofá cama — restaurado</div>
+    </div>
+
+    <div class="ba-card">
+      <div class="ba-pair">
+        <img src="colchonnuevo.jpeg" alt="Sofá cama antes" />
+        <img src="limpio.jpeg" alt="Sofá cama después" />
+      </div>
+      <div class="ba-card-title">🛏️ Colchón — desinfección profunda</div>
+    </div>
+
+    <div class="ba-card">
+      <div class="ba-pair">
+        <img src="antesnuevo.jpeg" alt="Sillón antes" />
+        <img src="despuesnuevo.jpeg" alt="Sillón después" />
+      </div>
+      <div class="ba-card-title">🪑 Sillón — limpieza impecable</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section" id="video">
+  <div class="section-tag">Testimonio destacado</div>
+  <div class="section-title">LO DICEN NUESTROS CLIENTES</div>
+  <div class="section-sub" style="margin: 0 auto 40px;">
+    Conoce la experiencia de quienes ya confiaron en nosotros.
+  </div>
+
+  <div class="video-wrapper">
+
+    <!-- 🔥 AQUÍ VA TU VIDEO (REEMPLAZO DEL PLACEHOLDER) -->
+    <video controls style="width:100%; display:block;">
+      <source src="AndreLlosa.mp4" type="video/mp4">
+      Tu navegador no soporta video HTML5.
+    </video>
+
+  </div>
+
+  <p style="margin-top:16px; color:#888; font-size:0.85rem;">
+    📌 Video real de cliente satisfecho
+  </p>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-tag">Opiniones</div>
+  <div class="section-title">¿QUÉ DICEN DE NOSOTROS?</div>
+  <div class="section-sub">Cientos de clientes satisfechos en todo Lima.</div>
+  <div class="testimonials-grid">
+    <div class="tcard">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p>"Increíble el resultado. Tenía mi sofá con manchas que parecían imposibles de quitar y quedó como nuevo. ¡100% recomendado!"</p>
+      <div class="author">— María R., Lima</div>
+    </div>
+    <div class="tcard">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p>"El colchón de mis hijos estaba terrible. Llamé a Clean Impkable y en pocas horas quedó desinfectado y sin olores. Excelente servicio."</p>
+      <div class="author">— Carlos M., San Isidro</div>
+    </div>
+    <div class="tcard">
+      <div class="stars">⭐⭐⭐⭐⭐</div>
+      <p>"Muy profesionales, puntuales y el trabajo quedó perfecto. Mis sillones quedaron como cuando los compré. Volveré a llamarlos."</p>
+      <div class="author">— Lucía P., Miraflores</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="section-tag">Contáctanos</div>
+  <div class="section-title">¡PIDE TU COTIZACIÓN!</div>
+  <div class="section-sub">Sin compromiso. Te respondemos en minutos por WhatsApp.</div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <a href="https://wa.me/51970676245?text=Hola!%20Quiero%20información%20sobre%20sus%20servicios" target="_blank" class="contact-item">
+        <span class="icon">📲</span>
+        <div class="info">
+          <strong>WhatsApp</strong>
+          <span>+51 970 676 245</span>
+        </div>
+      </a>
+      <a href="https://www.tiktok.com/@clean_impkble" target="_blank" class="contact-item">
+        <span class="icon">🎵</span>
+        <div class="info">
+          <strong>TikTok</strong>
+          <span>@clean_impkble</span>
+        </div>
+      </a>
+      <a href="https://wa.me/51970676245" target="_blank" class="contact-item">
+        <span class="icon">⏰</span>
+        <div class="info">
+          <strong>Horario</strong>
+          <span>Lunes a Sábado · 8am – 6pm</span>
+        </div>
+      </a>
+      <a href="https://wa.me/51970676245" target="_blank" class="contact-item">
+        <span class="icon">📍</span>
+        <div class="info">
+          <strong>Cobertura</strong>
+          <span>Lima Metropolitana</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="map-wrapper">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d249298.72508038458!2d-77.12258!3d-12.04318!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5f619ee3ec7%3A0x14206a3c00e763a2!2sLima!5e0!3m2!1ses!2spe!4v1693000000000"
+        allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL BAR -->
+<div class="social-bar">
+  <p>Síguenos en redes sociales</p>
+  <div class="social-links">
+    <a href="https://wa.me/51970676245" target="_blank" class="social-link whatsapp">
+      📲 WhatsApp
+    </a>
+    <a href="https://www.tiktok.com/@clean_impkble" target="_blank" class="social-link tiktok">
+      🎵 TikTok
+    </a>
+    <a href="https://www.google.com/search?q=Clean+Impkable+Lima" target="_blank" class="social-link">
+      🔍 Google
+    </a>
+	<a href="https://www.facebook.com/cleanimpkble/" target="_blank" class="social-link">
+	  🔍 Facebook
+	</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Clean Impkable</span> · Imperio Impecable S.A.C · Lima, Perú · Todos los derechos reservados</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/51970676245?text=Hola!%20Quiero%20una%20cotización" target="_blank" class="wa-float" title="Escríbenos por WhatsApp">
+  📲
+</a>
+
+</body>
+</html>
